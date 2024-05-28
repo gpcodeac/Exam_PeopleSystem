@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam_PeopleSystem", "Exam_PeopleSystem\Exam_PeopleSystem.csproj", "{12311A9B-C39F-4744-B02C-2D40C1AAFCDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleSystem.Database", "PeopleSystem.Database\PeopleSystem.Database.csproj", "{002896D5-642C-4D2A-A45B-137238E453CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleSystem.BusinessLogic", "PeopleSystem.BusinessLogic\PeopleSystem.BusinessLogic.csproj", "{202C1FEF-A4E0-4967-9B9A-4E05771C60C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{12311A9B-C39F-4744-B02C-2D40C1AAFCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12311A9B-C39F-4744-B02C-2D40C1AAFCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12311A9B-C39F-4744-B02C-2D40C1AAFCDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002896D5-642C-4D2A-A45B-137238E453CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002896D5-642C-4D2A-A45B-137238E453CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002896D5-642C-4D2A-A45B-137238E453CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002896D5-642C-4D2A-A45B-137238E453CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{202C1FEF-A4E0-4967-9B9A-4E05771C60C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{202C1FEF-A4E0-4967-9B9A-4E05771C60C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{202C1FEF-A4E0-4967-9B9A-4E05771C60C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{202C1FEF-A4E0-4967-9B9A-4E05771C60C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

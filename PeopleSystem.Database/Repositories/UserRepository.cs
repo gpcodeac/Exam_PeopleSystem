@@ -16,18 +16,18 @@ namespace PeopleSystem.Database.Repositories
             _context = context;
         }
 
-        public void AddUser(User user)
+        public void CreateUser(User user)
         {
             _context.Users.Add(user);
             _context.SaveChanges();
         }
 
-        public User GetUserById(int id)
+        public User ReadUserById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
         }
 
-        public User GetUserByUsername(string username)
+        public User ReadUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username);
         }

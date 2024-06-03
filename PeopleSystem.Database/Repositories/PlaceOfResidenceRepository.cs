@@ -1,8 +1,9 @@
 ﻿using PeopleSystem.Database.Models;
+using PeopleSystem.Database.Repositories.Interfaces;
 
 namespace PeopleSystem.Database.Repositories
 {
-    internal class PlaceOfResidenceRepository
+    internal class PlaceOfResidenceRepository : IPlaceOfResidenceRepository
     {
         private readonly AppDBContext _context;
 

@@ -11,4 +11,8 @@
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleSystem.Database\PeopleSystem.Database.csproj" />
+  </ItemGroup>
+
 </Project>

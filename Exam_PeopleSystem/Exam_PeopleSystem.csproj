@@ -14,4 +14,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleSystem.BusinessLogic\PeopleSystem.BusinessLogic.csproj" />
+    <ProjectReference Include="..\PeopleSystem.Database\PeopleSystem.Database.csproj" />
+  </ItemGroup>
+
 </Project>

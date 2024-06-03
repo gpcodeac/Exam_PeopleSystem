@@ -1,4 +1,5 @@
 ﻿using PeopleSystem.Database.Models;
+using PeopleSystem.Database.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.Database.Repositories
 {
-    internal class UserRepository
+    internal class UserRepository : IUserRepository
     {
         private readonly AppDBContext _context;
 
@@ -44,6 +45,6 @@ namespace PeopleSystem.Database.Repositories
             _context.SaveChanges();
         }
 
-      
+
     }
 }

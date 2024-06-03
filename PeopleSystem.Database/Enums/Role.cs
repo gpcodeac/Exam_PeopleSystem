@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.Database.Enums
 {
-    internal enum Role
+    public enum Role
     {
         Admin,
         User

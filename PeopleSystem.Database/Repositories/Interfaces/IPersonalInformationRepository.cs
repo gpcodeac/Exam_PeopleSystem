@@ -2,7 +2,7 @@
 
 namespace PeopleSystem.Database.Repositories.Interfaces
 {
-    internal interface IPersonalInformationRepository
+    public interface IPersonalInformationRepository
     {
         void CreatePersonalInformation(PersonalInformation personalInformation);
         PersonalInformation ReadPersonalInformationById(int id);

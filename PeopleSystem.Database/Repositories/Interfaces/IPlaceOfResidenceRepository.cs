@@ -2,7 +2,7 @@
 
 namespace PeopleSystem.Database.Repositories.Interfaces
 {
-    internal interface IPlaceOfResidenceRepository
+    public interface IPlaceOfResidenceRepository
     {
         void CreatePlaceOfResidence(PlaceOfResidence placeOfResidence);
         PlaceOfResidence ReadPlaceOfResidenceById(int id);

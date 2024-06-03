@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.Database.Models
 {
-    internal class PlaceOfResidence
+    public class PlaceOfResidence
     {
         public int Id { get; set; }
         public string City { get; set; }

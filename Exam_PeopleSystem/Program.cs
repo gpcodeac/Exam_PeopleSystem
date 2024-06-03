@@ -1,4 +1,5 @@
 using PeopleSystem.Database.Extensions;
+using PeopleSystem.BusinessLogic.Extensions;
 
 namespace Exam_PeopleSystem
 {
@@ -14,7 +15,9 @@ namespace Exam_PeopleSystem
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDatabaseContext(builder.Configuration.GetConnectionString("Database"));
+            builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("Database"));
+            builder.Services.AddBusinessLogicServices();
+
 
             var app = builder.Build();
 

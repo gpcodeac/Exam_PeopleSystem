@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.Database.Models
 {
-    internal class ProfilePhoto
+    public class ProfilePhoto
     {
         public int Id { get; set; }
         public string ProfilePhotoPath { get; set; }

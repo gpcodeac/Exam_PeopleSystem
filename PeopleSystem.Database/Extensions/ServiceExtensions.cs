@@ -7,7 +7,7 @@ namespace PeopleSystem.Database.Extensions
 {
     public static class ServiceExtensions 
     {
-        public static void AddDatabaseContext(this IServiceCollection services, string connectionString)
+        public static void AddDatabaseServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IPersonalInformationRepository, PersonalInformationRepository>();

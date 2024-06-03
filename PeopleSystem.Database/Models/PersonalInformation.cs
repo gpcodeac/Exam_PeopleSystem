@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.Database.Models
 {
-    internal class PersonalInformation
+    public class PersonalInformation
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

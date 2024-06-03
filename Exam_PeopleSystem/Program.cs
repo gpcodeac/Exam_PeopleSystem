@@ -15,8 +15,9 @@ namespace Exam_PeopleSystem
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("Database"));
+            builder.Services.AddDatabaseServices(builder.Configuration);
             builder.Services.AddBusinessLogicServices();
+            builder.Services.AddJwtService(builder.Configuration);
 
 
             var app = builder.Build();

@@ -6,10 +6,10 @@ namespace PeopleSystem.Database.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
-        public byte[] Salt { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public Role Role { get; set; }
-        public PersonalInformation PersonalInformation { get; set; }
+        public virtual PersonalInformation? PersonalInformation { get; set; }
 
     }
 }

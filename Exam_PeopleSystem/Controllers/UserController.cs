@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleSystem.BusinessLogic.Services.Interfaces;
 using PeopleSystem.Database.Models;
+using PeopleSystem.BusinessLogic.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,10 +35,20 @@ namespace Exam_PeopleSystem.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] User user)
+        [Route("new")]
+        public void SignUp([FromBody] UserDto user) //validations inline or via separate extension method?
         {
             _userService.CreateUser(user);
         }
+
+        [HttpPost]
+        [Route("login")]
+        public void Login([FromBody] UserDto user)
+        {
+            _userService.Login(user);
+        }
+
+
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]

@@ -1,6 +1,8 @@
 using PeopleSystem.Database.Extensions;
 using PeopleSystem.BusinessLogic.Extensions;
 
+using Exam_PeopleSystem.Extensions;
+
 namespace Exam_PeopleSystem
 {
     public class Program
@@ -14,10 +16,12 @@ namespace Exam_PeopleSystem
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddDatabaseServices(builder.Configuration);
+            
+            builder.Services.AddSwaggerConfiguration();
+            builder.Services.AddJwtConfiguration(builder.Configuration);
+
             builder.Services.AddBusinessLogicServices();
-            builder.Services.AddJwtService(builder.Configuration);
+            builder.Services.AddDatabaseServices(builder.Configuration);  //should i pass whole configuration or just the connection string?
 
 
             var app = builder.Build();

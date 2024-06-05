@@ -13,11 +13,13 @@ namespace PeopleSystem.BusinessLogic.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, IJwtService jwtService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -25,7 +27,7 @@ namespace PeopleSystem.BusinessLogic.Services
             using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 
@@ -40,6 +42,10 @@ namespace PeopleSystem.BusinessLogic.Services
 
         public void CreateUser(UserDto userDto)
         {
+            if (_userRepository.ReadUserByUsername(userDto.Username) is not null)
+            {
+                throw new Exception("User already exists");
+            }
             var user = _mapper.Map<UserDto, User>(userDto);
             CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
@@ -48,8 +54,7 @@ namespace PeopleSystem.BusinessLogic.Services
             _userRepository.CreateUser(user);
         }
 
-
-        public void Login(UserDto userDto)
+        public string Login(UserDto userDto)
         {
             var user = _userRepository.ReadUserByUsername(userDto.Username);
             if (user is null)
@@ -60,8 +65,11 @@ namespace PeopleSystem.BusinessLogic.Services
             {
                 throw new Exception("Invalid password");
             }
-            //create token and login
+            string token = _jwtService.GenerateSecurityToken(user);
+            return token;
         }
+
+
 
         public User ReadUserById(int id)
         {

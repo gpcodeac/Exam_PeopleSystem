@@ -8,7 +8,7 @@ namespace PeopleSystem.BusinessLogic.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>().ReverseMap();
         }
     }
 }

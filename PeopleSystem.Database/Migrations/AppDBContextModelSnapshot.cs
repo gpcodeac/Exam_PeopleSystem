@@ -135,16 +135,16 @@ namespace PeopleSystem.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("Salt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -197,8 +197,7 @@ namespace PeopleSystem.Database.Migrations
 
             modelBuilder.Entity("PeopleSystem.Database.Models.User", b =>
                 {
-                    b.Navigation("PersonalInformation")
-                        .IsRequired();
+                    b.Navigation("PersonalInformation");
                 });
 #pragma warning restore 612, 618
         }

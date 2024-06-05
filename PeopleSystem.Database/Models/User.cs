@@ -9,7 +9,7 @@ namespace PeopleSystem.Database.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public Role Role { get; set; }
-        public virtual PersonalInformation? PersonalInformation { get; set; }
+        public virtual List<PersonalInformation>? PersonalInformation { get; set; }
 
     }
 }

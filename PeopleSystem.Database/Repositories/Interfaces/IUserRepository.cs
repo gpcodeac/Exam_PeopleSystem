@@ -7,6 +7,7 @@ namespace PeopleSystem.Database.Repositories.Interfaces
         void CreateUser(User user);
         User ReadUserById(int id);
         User ReadUserByUsername(string username);
+        List<User> ReadAllUsers();
         void UpdateUser(User user);
         void DeleteUser(User user);
     }

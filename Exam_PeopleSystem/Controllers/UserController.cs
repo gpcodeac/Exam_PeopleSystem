@@ -3,6 +3,7 @@ using PeopleSystem.BusinessLogic.Services.Interfaces;
 using PeopleSystem.Database.Models;
 using PeopleSystem.BusinessLogic.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,7 +26,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("new")]
         [AllowAnonymous]
-        public IActionResult SignUp([FromBody] UserDto user) //validations inline or via separate extension method?
+        public IActionResult SignUp([FromBody] UserRequestDto user) //validations inline or via separate extension method?
         {
             try
             {
@@ -41,7 +42,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] UserDto user)
+        public IActionResult Login([FromBody] UserRequestDto user)
         {
             try
             {
@@ -66,42 +67,33 @@ namespace Exam_PeopleSystem.Controllers
         [HttpGet]
         [Route("all")]
         [Authorize(Roles = "Admin")]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetAllUsers()
         {
             return new string[] { "value1", "value2" };
         }
 
         [HttpGet]
-        [Route("userAdm")]
+        [Route("{id}")]
         [Authorize(Roles = "Admin")]
-        public User GetAdm(int id)
+        public UserResponseDto GetUserById(int id)
         {
+
+            var userClaims = User.Claims;
+            var userId = userClaims.FirstOrDefault(c => c.Type == "Id").Value;
+
+            if (userId is null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (userId != id.ToString())
+            {
+                throw new Exception("Unauthorized");
+            }
             return _userService.ReadUserById(id);
         }
 
-        [HttpGet]
-        [Route("userUs")]
-        [Authorize(Roles = "User")]
-        public User GetUs(int id)
-        {
-            return _userService.ReadUserById(id);
-        }
-
-        [HttpGet]
-        [Route("userAnon")]
-        [AllowAnonymous]
-        public User GetAnon(int id)
-        {
-            return _userService.ReadUserById(id);
-        }
-
-        [HttpGet]
-        [Route("userNone")]
-        public User GetNon(int id)
-        {
-            return _userService.ReadUserById(id);
-        }
-
+     
 
 
         // PUT api/<UserController>/5

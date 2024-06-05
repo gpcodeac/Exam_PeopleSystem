@@ -40,13 +40,13 @@ namespace PeopleSystem.BusinessLogic.Services
             }
         }
 
-        public void CreateUser(UserDto userDto)
+        public void CreateUser(UserRequestDto userDto)
         {
             if (_userRepository.ReadUserByUsername(userDto.Username) is not null)
             {
                 throw new Exception("User already exists");
             }
-            var user = _mapper.Map<UserDto, User>(userDto);
+            var user = _mapper.Map<UserRequestDto, User>(userDto);
             CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -54,7 +54,7 @@ namespace PeopleSystem.BusinessLogic.Services
             _userRepository.CreateUser(user);
         }
 
-        public string Login(UserDto userDto)
+        public string Login(UserRequestDto userDto)
         {
             var user = _userRepository.ReadUserByUsername(userDto.Username);
             if (user is null)
@@ -71,9 +71,19 @@ namespace PeopleSystem.BusinessLogic.Services
 
 
 
-        public User ReadUserById(int id)
+        public List<User> GetAllUsers()
         {
-            return _userRepository.ReadUserById(id);
+            return _userRepository.ReadAllUsers();
+        }
+
+        public UserResponseDto ReadUserById(int id)
+        {
+            var user = _userRepository.ReadUserById(id);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            return _mapper.Map<User, UserResponseDto>(user);
         }
     }
 }

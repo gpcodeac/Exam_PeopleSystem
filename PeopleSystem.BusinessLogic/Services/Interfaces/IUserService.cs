@@ -5,8 +5,9 @@ namespace PeopleSystem.BusinessLogic.Services.Interfaces
 {
     public interface IUserService
     {
-        void CreateUser(UserDto user);
-        string Login(UserDto user);
-        User ReadUserById(int id);
+        void CreateUser(UserRequestDto user);
+        string Login(UserRequestDto user);
+        List<User> GetAllUsers();
+        UserResponseDto ReadUserById(int id);
     }
 }

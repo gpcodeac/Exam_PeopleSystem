@@ -48,7 +48,7 @@ namespace Exam_PeopleSystem.Extensions
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey, //Rokas's example has SecuritySchemeType.Http - whats the diff? A: Apikey will require me to write Bearer upfront, Http will just accept the token
+                    Type = SecuritySchemeType.Http, //My example initially had ApiKey, Rokas's example has SecuritySchemeType.Http - whats the diff? A: Apikey will require me to write Bearer upfront, Http will just accept the token
                     Scheme = "Bearer",
                     BearerFormat = "JWT"
                 });

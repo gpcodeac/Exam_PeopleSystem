@@ -28,6 +28,12 @@ namespace PeopleSystem.Database.Repositories
             return _context.Users.FirstOrDefault(u => u.Username == username);
         }
 
+        public List<User> ReadAllUsers()
+        {
+            //return [.. _context.Users]; //new syntax
+            return _context.Users.ToList();
+        }
+
         public void UpdateUser(User user)
         {
             _context.Users.Update(user);

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.BusinessLogic.Dtos
 {
-    public class UserResponseDto
+    public class UserDataForAdminResponseDto
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public List<PersonalInformationInUserDto>? PersonalInformation { get; set; }
+        public List<PersonalInformationForAdminDto>? PersonalInformation { get; set; }
     }
 }

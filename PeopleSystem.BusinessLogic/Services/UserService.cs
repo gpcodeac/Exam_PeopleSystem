@@ -40,13 +40,13 @@ namespace PeopleSystem.BusinessLogic.Services
             }
         }
 
-        public void CreateUser(UserRequestDto userDto)
+        public void CreateUser(UserLoginRequestDto userDto)
         {
             if (_userRepository.ReadUserByUsername(userDto.Username) is not null)
             {
                 throw new Exception("User already exists");
             }
-            var user = _mapper.Map<UserRequestDto, User>(userDto);
+            var user = _mapper.Map<UserLoginRequestDto, User>(userDto);
             CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -54,7 +54,7 @@ namespace PeopleSystem.BusinessLogic.Services
             _userRepository.CreateUser(user);
         }
 
-        public string Login(UserRequestDto userDto)
+        public string Login(UserLoginRequestDto userDto)
         {
             var user = _userRepository.ReadUserByUsername(userDto.Username);
             if (user is null)
@@ -69,21 +69,43 @@ namespace PeopleSystem.BusinessLogic.Services
             return token;
         }
 
-
-
-        public List<User> GetAllUsers()
+        public List<UserDataForAdminResponseDto> GetAllUsers()
         {
-            return _userRepository.ReadAllUsers();
+            List<User> users = _userRepository.ReadAllUsers();
+            return _mapper.Map<List<User>, List<UserDataForAdminResponseDto>>(users);
         }
 
-        public UserResponseDto ReadUserById(int id)
+        public UserDataForAdminResponseDto GetUser(int id)
         {
             var user = _userRepository.ReadUserById(id);
             if (user is null)
             {
                 throw new Exception("User not found");
             }
-            return _mapper.Map<User, UserResponseDto>(user);
+            return _mapper.Map<User, UserDataForAdminResponseDto>(user);
+        }
+
+        public void DeleteUser(int id)
+        {
+            var user = _userRepository.ReadUserById(id);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            _userRepository.DeleteUser(user);
+        }
+
+        public void UpdateUserPassword(int id, string password)
+        {
+            var user = _userRepository.ReadUserById(id);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            _userRepository.UpdateUser(user);
         }
     }
 }

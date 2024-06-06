@@ -26,7 +26,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("new")]
         [AllowAnonymous]
-        public IActionResult SignUp([FromBody] UserRequestDto user) //validations inline or via separate extension method?
+        public IActionResult SignUp([FromBody] UserLoginRequestDto user) //validations inline or via separate extension method?
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] UserRequestDto user)
+        public IActionResult Login([FromBody] UserLoginRequestDto user)
         {
             try
             {
@@ -62,50 +62,98 @@ namespace Exam_PeopleSystem.Controllers
             }
         }
 
-
-
         [HttpGet]
         [Route("all")]
         [Authorize(Roles = "Admin")]
-        public IEnumerable<string> GetAllUsers()
+        public IActionResult GetAllUsers()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var users = _userService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpGet]
         [Route("{id}")]
         [Authorize(Roles = "Admin")]
-        public UserResponseDto GetUserById(int id)
+        public IActionResult GetUserById(int id)
         {
-
-            var userClaims = User.Claims;
-            var userId = userClaims.FirstOrDefault(c => c.Type == "Id").Value;
-
-            if (userId is null)
+            try
             {
-                throw new Exception("User not found");
+                return Ok(_userService.GetUser(id));
             }
-
-            if (userId != id.ToString())
+            catch (Exception e)
             {
-                throw new Exception("Unauthorized");
+                if (e.Message == "User not found")
+                {
+                    return NotFound(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
             }
-            return _userService.ReadUserById(id);
         }
 
-     
-
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _userService.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "User not found")
+                {
+                    return NotFound(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
         }
+
+        [HttpPut]
+        [Route("{id}/password")]
+        public IActionResult Put(int id, [FromBody] string password)
+        {
+            try
+            {
+                var userClaims = User.Claims;
+                var jwtUserRole = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+                var jwtUserId = userClaims.FirstOrDefault(c => c.Type == "Id").Value;
+                if (jwtUserRole == "Admin" || jwtUserId == id.ToString())
+                {
+                    _userService.UpdateUserPassword(id, password);
+                    return Ok();
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "User not found")
+                {
+                    return NotFound(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
+        }
+
+
     }
 }

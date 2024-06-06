@@ -3,7 +3,7 @@
 
 namespace PeopleSystem.BusinessLogic.Dtos
 {
-    public class UserRequestDto
+    public class UserLoginRequestDto
     {
         [Required]
         public string Username { get; set; }

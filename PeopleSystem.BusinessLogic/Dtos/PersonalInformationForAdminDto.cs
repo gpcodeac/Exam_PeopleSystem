@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSystem.BusinessLogic.Dtos
 {
-    public class PersonalInformationInUserDto
+    public class PersonalInformationForAdminDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

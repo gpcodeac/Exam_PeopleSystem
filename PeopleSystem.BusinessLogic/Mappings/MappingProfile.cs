@@ -8,8 +8,8 @@ namespace PeopleSystem.BusinessLogic.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<UserRequestDto, User>();
-            CreateMap<User, UserResponseDto>();
+            CreateMap<UserLoginRequestDto, User>();
+            CreateMap<User, UserDataForAdminResponseDto>();
         }
     }
 }

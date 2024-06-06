@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleSystem.BusinessLogic.Services.Interfaces;
-using PeopleSystem.Database.Models;
 using PeopleSystem.BusinessLogic.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
@@ -26,7 +25,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("new")]
         [AllowAnonymous]
-        public IActionResult SignUp([FromBody] UserLoginRequestDto user) //validations inline or via separate extension method?
+        public IActionResult SignUp([FromBody] UserSignupRequestDto user) //validations inline or via separate extension method?
         {
             try
             {

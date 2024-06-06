@@ -40,13 +40,13 @@ namespace PeopleSystem.BusinessLogic.Services
             }
         }
 
-        public void CreateUser(UserLoginRequestDto userDto)
+        public void CreateUser(UserSignupRequestDto userDto)
         {
             if (_userRepository.ReadUserByUsername(userDto.Username) is not null)
             {
                 throw new Exception("User already exists");
             }
-            var user = _mapper.Map<UserLoginRequestDto, User>(userDto);
+            var user = _mapper.Map<UserSignupRequestDto, User>(userDto);
             CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;

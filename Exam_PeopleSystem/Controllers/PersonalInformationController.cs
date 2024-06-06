@@ -1,6 +1,12 @@
-﻿namespace Exam_PeopleSystem.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Exam_PeopleSystem.Controllers
 {
-    public class PersonalInformationController
+    [Route("api/[controller]")]
+    [Authorize]
+    [ApiController]
+    public class PersonalInformationController : ControllerBase
     {
 
         //public void Placeholder(int id)

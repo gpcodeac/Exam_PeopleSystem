@@ -9,6 +9,7 @@ namespace PeopleSystem.BusinessLogic.Mappings
         public MappingProfile()
         {
             CreateMap<UserLoginRequestDto, User>();
+            CreateMap<UserSignupRequestDto, User>();
             CreateMap<User, UserDataForAdminResponseDto>();
         }
     }

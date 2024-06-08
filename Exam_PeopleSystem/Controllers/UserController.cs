@@ -25,7 +25,7 @@ namespace Exam_PeopleSystem.Controllers
         [HttpPost]
         [Route("new")]
         [AllowAnonymous]
-        public IActionResult SignUp([FromBody] UserSignupRequestDto user) //validations inline or via separate extension method?
+        public IActionResult SignUp([FromBody] UserSignupRequestDto user)
         {
             try
             {
@@ -34,7 +34,14 @@ namespace Exam_PeopleSystem.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                if (e.Message == "User already exists")
+                {
+                    return Conflict(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
             }
         }
 
@@ -56,7 +63,7 @@ namespace Exam_PeopleSystem.Controllers
                 }
                 else
                 {
-                    return BadRequest(e.Message);
+                    return StatusCode(500, e.Message);
                 }
             }
         }
@@ -101,7 +108,7 @@ namespace Exam_PeopleSystem.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteUser(int id)
         {
             try
             {
@@ -123,7 +130,7 @@ namespace Exam_PeopleSystem.Controllers
 
         [HttpPut]
         [Route("{id}/password")]
-        public IActionResult Put(int id, [FromBody] string password)
+        public IActionResult ChangeUserPassword(int id, [FromBody] string password)
         {
             try
             {

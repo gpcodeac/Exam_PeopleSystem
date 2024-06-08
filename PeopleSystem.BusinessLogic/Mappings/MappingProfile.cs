@@ -11,6 +11,7 @@ namespace PeopleSystem.BusinessLogic.Mappings
             CreateMap<UserLoginRequestDto, User>();
             CreateMap<UserSignupRequestDto, User>();
             CreateMap<User, UserDataForAdminResponseDto>();
+            CreateMap<PersonalInformation, PersonalInformationDto>();
         }
     }
 }

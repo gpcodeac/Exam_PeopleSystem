@@ -6,6 +6,7 @@ namespace PeopleSystem.Database.Repositories.Interfaces
     {
         void CreatePersonalInformation(PersonalInformation personalInformation);
         PersonalInformation ReadPersonalInformationById(int id);
+        List<PersonalInformation> ReadAllPersonalInformationOnUser(int userId);
         void UpdatePersonalInformation(PersonalInformation personalInformation);
         void DeletePersonalInformation(PersonalInformation personalInformation);
     }

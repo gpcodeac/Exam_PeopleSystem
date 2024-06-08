@@ -23,6 +23,11 @@ namespace PeopleSystem.Database.Repositories
             return _context.PersonalInformations.FirstOrDefault(pi => pi.Id == id);
         }
 
+        public List<PersonalInformation> ReadAllPersonalInformationOnUser(int userId)
+        {
+            return _context.PersonalInformations.Where(pi => pi.UserId == userId).ToList();
+        }
+
         public void UpdatePersonalInformation(PersonalInformation personalInformation)
         {
             _context.PersonalInformations.Update(personalInformation);

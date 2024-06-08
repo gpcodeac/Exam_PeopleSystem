@@ -2,10 +2,11 @@
 using PeopleSystem.Database.Repositories.Interfaces;
 using PeopleSystem.BusinessLogic.Dtos;
 using PeopleSystem.Database.Models;
+using PeopleSystem.BusinessLogic.Services.Interfaces;
 
 namespace PeopleSystem.BusinessLogic.Services
 {
-    internal class PersonalInformationService
+    internal class PersonalInformationService : IPersonalInformationService
     {
         private readonly IPersonalInformationRepository _personalInformationRepository;
         private readonly IMapper _mapper;

@@ -79,18 +79,18 @@ namespace Exam_PeopleSystem.Controllers
 
 
 
-        [HttpPut]
-        public IActionResult UpdatePersonalInformation(List<PersonalInformationDto> updatedInfo) //make it only work on one item
-        {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
-            if (userIdClaim == null)
-            {
-                return Unauthorized();
-            }
-            int userId = int.Parse(userIdClaim.Value);
-            _personalInformationService.UpdatePersonalInformation(userId, updatedInfo);
-            return Ok();
-        }
+        //[HttpPut]
+        //public IActionResult UpdatePersonalInformation(List<PersonalInformationDto> updatedInfo) //make it only work on one item
+        //{
+        //    var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+        //    if (userIdClaim == null)
+        //    {
+        //        return Unauthorized();
+        //    }
+        //    int userId = int.Parse(userIdClaim.Value);
+        //    _personalInformationService.UpdatePersonalInformation(userId, updatedInfo);
+        //    return Ok();
+        //}
 
 
         //Create a new record, validate the data

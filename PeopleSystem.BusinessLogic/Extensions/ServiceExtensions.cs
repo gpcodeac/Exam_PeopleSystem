@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PeopleSystem.BusinessLogic.Mappings;
 using PeopleSystem.BusinessLogic.Services;
 using PeopleSystem.BusinessLogic.Services.Interfaces;
-using PeopleSystem.BusinessLogic.Mappings;
 
 namespace PeopleSystem.BusinessLogic.Extensions
 {
@@ -13,6 +10,7 @@ namespace PeopleSystem.BusinessLogic.Extensions
         public static void AddBusinessLogicServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPersonalInformationService, PersonalInformationService>();
             services.AddTransient<IJwtService, JwtService>();
             services.AddAutoMapper(typeof(MappingProfile));
         }

@@ -1,12 +1,13 @@
 ﻿using PeopleSystem.Database.Enums;
 using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
+using PeopleSystem.BusinessLogic.Attributes;
 
 namespace PeopleSystem.BusinessLogic.Dtos
 {
     public class PersonalInformationDto
     {
-        [Length(2, 50)]
+        [Length(2,50)]
         public string FirstName { get; set; }
 
         [Length(2,50)]
@@ -17,10 +18,10 @@ namespace PeopleSystem.BusinessLogic.Dtos
         
         public DateOnly DateOfBirth { get; set; }
 
-
-
-        //validations
+        [LithuanianPersonalNumber]
         public string PersonalIdentificationNumber { get; set; }
+
+
         ////validations
         //public string? PhoneNumber { get; set; }
         ////validations, unique check not needed because personal code is not unique in our situation either

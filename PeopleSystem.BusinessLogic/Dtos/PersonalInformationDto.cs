@@ -21,16 +21,18 @@ namespace PeopleSystem.BusinessLogic.Dtos
         [LithuanianPersonalNumber]
         public string PersonalIdentificationNumber { get; set; }
 
+        [LithuanianPhoneNumber]
+        public string? PhoneNumber { get; set; }
 
-        ////validations
-        //public string? PhoneNumber { get; set; }
-        ////validations, unique check not needed because personal code is not unique in our situation either
-        //public string? Email { get; set; }
-        ////validations inside this other model/dto for file type and file size and minimum resolutions 
-        //public ProfilePhoto? ProfilePhoto { get; set; }
-        //public PlaceOfResidence? PlaceOfResidence { get; set; }
-        //[JsonIgnore]
+        //unique check not needed because personal code is not unique in our situation either
+        [ValidEmailPattern]
+        public string? Email { get; set; }
+
+        public ProfilePhotoDto? ProfilePhoto { get; set; }
+
+        public PlaceOfResidenceDto? PlaceOfResidence { get; set; }
+
+        [JsonIgnore]
         public int UserId { get; set; }
-        //public virtual User User { get; set; }
     }
 }

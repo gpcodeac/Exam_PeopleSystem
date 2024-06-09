@@ -70,7 +70,7 @@ namespace PeopleSystem.BusinessLogic.Attributes
                 return new ValidationResult("Date of birth does not match personal number.");
             }
 
-            if (!CheckSumValidation(nationalIdNumberArray))
+            if (!CheckSumValid(nationalIdNumberArray))
             {
                 return new ValidationResult("Personal number checksum is invalid.");
             }
@@ -78,14 +78,14 @@ namespace PeopleSystem.BusinessLogic.Attributes
             return ValidationResult.Success;
         }
 
-        private bool CheckSumValidation(int[] nationalIdNumberArray)
+        private bool CheckSumValid(int[] nationalIdNumberArray)
         {
             int[] multipliers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 1 };
             int[] reserveMultipliers = { 3, 4, 5, 6, 7, 8, 9, 1, 2, 3 };
             int sum = 0;
             int remainder = 0;
             int lastDigit = nationalIdNumberArray[10];
-
+             
             for (int i = 0; i < 10; i++)
             {
                 sum += nationalIdNumberArray[i] * multipliers[i];

@@ -1,7 +1,6 @@
-﻿using PeopleSystem.Database.Enums;
-using System.Text.Json.Serialization;
+﻿using PeopleSystem.BusinessLogic.Attributes;
+using PeopleSystem.Database.Enums;
 using System.ComponentModel.DataAnnotations;
-using PeopleSystem.BusinessLogic.Attributes;
 
 namespace PeopleSystem.BusinessLogic.Dtos
 {

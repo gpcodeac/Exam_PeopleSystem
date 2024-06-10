@@ -9,7 +9,7 @@ namespace PeopleSystem.Database.Models
         public int Id { get; set; }
 
         [StringLength(255)]
-        public string ProfilePhotoPath { get; set; }
+        public string PhotoPath { get; set; }
 
         [StringLength(255)]
         public string ThumbnailPath { get; set; }

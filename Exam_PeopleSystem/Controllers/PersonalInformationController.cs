@@ -129,7 +129,30 @@ namespace Exam_PeopleSystem.Controllers
         }
 
 
-        //Picture thumbnail
+        [HttpPost]
+        [Route("{pesonalIdentificationNumber}/photo/add")]
+        [Authorize(Roles = "User")]
+        public IActionResult AddPhotoToPersonalInformationRecord(string pesonalIdentificationNumber, [FromForm] ProfilePhotoDto photo)
+        {
+            try
+            {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                int userId = int.Parse(userIdClaim.Value);
+                
+
+
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
 
 
     }

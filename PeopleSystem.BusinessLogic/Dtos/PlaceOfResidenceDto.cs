@@ -18,14 +18,5 @@ namespace PeopleSystem.BusinessLogic.Dtos
 
         [RegularExpression(@"^LT-\d{5}$")]
         public string? PostalCode { get; set; }
-
-        //^([ĄČĘĖĮŠŲŪŽąčęėįšųūž\w]+[-. ]*)+$
-
-        //^([A-Za-z0-9ĄČĘĖĮŠŲŪŽąčęėįšųūž]+(-|\.? )?)+$
-
-        //^(?:[A-Za-z0-9ĄČĘĖĮŠŲŪŽąčęėįšųūž]+(?:-|\.? )?)+$
-
-        //^(([ĄČĘĖĮŠŲŪŽąčęėįšųūž\w]+)[-. ]*)+$
-
     }
 }

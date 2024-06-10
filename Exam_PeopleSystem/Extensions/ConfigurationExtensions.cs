@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -59,6 +58,12 @@ namespace Exam_PeopleSystem.Extensions
                     Format = "date",
                     Example = new OpenApiString("1970-01-01")
                 });
+                options.MapType<string>(() => new OpenApiSchema
+                {
+                    Type = "string",
+                    Example = new OpenApiString("string")
+                });
+
             });
         }
 

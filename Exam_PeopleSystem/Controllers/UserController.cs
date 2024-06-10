@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PeopleSystem.BusinessLogic.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PeopleSystem.BusinessLogic.Dtos;
-using Microsoft.AspNetCore.Authorization;
+using PeopleSystem.BusinessLogic.Services.Interfaces;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

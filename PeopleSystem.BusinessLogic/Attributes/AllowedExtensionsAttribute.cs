@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PeopleSystem.BusinessLogic.Attributes
 {
-    internal class AllowedExtensionsAttribute : ValidationAttribute
+    internal class UNUSEDAllowedExtensionsAttribute : ValidationAttribute
     {
         private readonly string[] _extensions;
 
-        public AllowedExtensionsAttribute(string[] extensions)
+        public UNUSEDAllowedExtensionsAttribute(string[] extensions)
         {
             _extensions = extensions;
         }

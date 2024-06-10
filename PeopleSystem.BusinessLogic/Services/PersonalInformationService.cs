@@ -23,37 +23,47 @@ namespace PeopleSystem.BusinessLogic.Services
             return _mapper.Map<List<PersonalInformation>, List<PersonalInformationDto>>(recordsList);
         }
 
-        public void CreatePersonalInformationRecord(PersonalInformationDto personalInformationDto)
+        public void CreatePersonalInformationRecord(int userId, PersonalInformationDto personalInformationDto)
         {
             var personalInformation = _mapper.Map<PersonalInformationDto, PersonalInformation>(personalInformationDto);
+            personalInformation.UserId = userId;
+            if (_personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
+                .FirstOrDefault(pi => pi.PersonalIdentificationNumber == personalInformation.PersonalIdentificationNumber) is not null)
+            {
+                throw new Exception("This Personal Identification Number already exists");
+            }
             _personalInformationRepository.CreatePersonalInformation(personalInformation);
         }
 
-
-
-
-
-        public void UpdatePersonalInformation(int userId, List<PersonalInformation> updatedInfo)
+        public void UpdatePersonalInformation(int userId, PersonalInformationDto personalInformationDto)
         {
-            var recordsList = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId);
-            foreach (var record in recordsList)
+            var recordToUpdate = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
+                                    .FirstOrDefault(pi => pi.PersonalIdentificationNumber == personalInformationDto.PersonalIdentificationNumber);
+            if (recordToUpdate is null)
             {
-                var updatedRecord = updatedInfo.FirstOrDefault(ui => ui.Id == record.Id);
-                if (updatedRecord != null)
-                {
-                    //record.FirstName = updatedRecord.FirstName;
-                    //record.LastName = updatedRecord.LastName;
-                    //record.Email = updatedRecord.Email;
-                    //record.PhoneNumber = updatedRecord.PhoneNumber;
-                    //record.Address = updatedRecord.Address;
-                    //record.City = updatedRecord.City;
-                    //record.Country = updatedRecord.Country;
-                    //record.PostalCode = updatedRecord.PostalCode;
-                    //record.BirthDate = updatedRecord.BirthDate;
-                }
+                CreatePersonalInformationRecord(userId, personalInformationDto);
+            }
+            else
+            {
+                var updatedRecord = _mapper.Map<PersonalInformationDto, PersonalInformation>(personalInformationDto);
+                updatedRecord.UserId = userId;
+                updatedRecord.Id = recordToUpdate.Id;
+                _personalInformationRepository.UpdatePersonalInformation(updatedRecord);
             }
         }
 
-
+        public void DeletePersonalInformationRecord(int userId, string personalIdentificationNumber)
+        {
+            var recordToDelete = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
+                                    .FirstOrDefault(pi => pi.PersonalIdentificationNumber == personalIdentificationNumber);
+            if (recordToDelete is not null)
+            {
+                _personalInformationRepository.DeletePersonalInformation(recordToDelete);
+            }
+            else
+            {
+                throw new Exception("Record not found");
+            }
+        }
     }
 }

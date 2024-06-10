@@ -2,12 +2,12 @@
 
 namespace PeopleSystem.BusinessLogic.Attributes
 {
-    internal class UsernameLengthAttribute : ValidationAttribute
+    internal class UNUSEDUsernameLengthAttribute : ValidationAttribute
     {
         private readonly int _min;
         private readonly int _max;
 
-        public UsernameLengthAttribute(int min, int max)
+        public UNUSEDUsernameLengthAttribute(int min, int max)
         {
             _min = min;
             _max = max;

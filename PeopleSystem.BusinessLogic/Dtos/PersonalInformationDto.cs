@@ -28,11 +28,6 @@ namespace PeopleSystem.BusinessLogic.Dtos
         [ValidEmailPattern]
         public string? Email { get; set; }
 
-        public ProfilePhotoDto? ProfilePhoto { get; set; }
-
         public PlaceOfResidenceDto? PlaceOfResidence { get; set; }
-
-        [JsonIgnore]
-        public int UserId { get; set; }
     }
 }

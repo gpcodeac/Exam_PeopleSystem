@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PeopleSystem.Database.Models;
-using PeopleSystem.BusinessLogic.Services.Interfaces;
 using PeopleSystem.BusinessLogic.Dtos;
+using PeopleSystem.BusinessLogic.Services.Interfaces;
 
 namespace Exam_PeopleSystem.Controllers
 {
@@ -49,7 +48,6 @@ namespace Exam_PeopleSystem.Controllers
         }
 
 
-
         [HttpPost]
         [Route("create")]
         [Authorize(Roles = "User")]
@@ -63,8 +61,36 @@ namespace Exam_PeopleSystem.Controllers
                     return Unauthorized();
                 }
                 int userId = int.Parse(userIdClaim.Value);
-                personalInformationDto.UserId = userId;
-                _personalInformationService.CreatePersonalInformationRecord(personalInformationDto);
+                _personalInformationService.CreatePersonalInformationRecord(userId, personalInformationDto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "This Personal Identification Number already exists")
+                {
+                    return Conflict(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
+        }
+
+
+        [HttpPut]
+        [Authorize(Roles = "User")]
+        public IActionResult UpdatePersonalInformation([FromBody] PersonalInformationDto personalInformationDto)
+        {
+            try
+            {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                int userId = int.Parse(userIdClaim.Value);
+                _personalInformationService.UpdatePersonalInformation(userId, personalInformationDto);
                 return Ok();
             }
             catch (Exception e)
@@ -74,32 +100,36 @@ namespace Exam_PeopleSystem.Controllers
         }
 
 
+        [HttpDelete]
+        [Authorize(Roles = "User")]
+        public IActionResult DeletePersonalInformationRecord([FromBody] string personalIdentificationNumber)
+        {
+            try
+            {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                int userId = int.Parse(userIdClaim.Value);
+                _personalInformationService.DeletePersonalInformationRecord(userId, personalIdentificationNumber);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "Record not found")
+                {
+                    return NotFound(e.Message);
+                }
+                else
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
+        }
 
-
-
-
-
-        //[HttpPut]
-        //public IActionResult UpdatePersonalInformation(List<PersonalInformationDto> updatedInfo) //make it only work on one item
-        //{
-        //    var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
-        //    if (userIdClaim == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    int userId = int.Parse(userIdClaim.Value);
-        //    _personalInformationService.UpdatePersonalInformation(userId, updatedInfo);
-        //    return Ok();
-        //}
-
-
-        //Create a new record, validate the data
-
-        //Delete a record by ID
 
         //Picture thumbnail
-
-        //Update place of residence on a personal info record
 
 
     }

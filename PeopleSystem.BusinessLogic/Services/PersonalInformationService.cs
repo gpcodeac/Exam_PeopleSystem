@@ -47,10 +47,8 @@ namespace PeopleSystem.BusinessLogic.Services
             }
             else
             {
-                var updatedRecord = _mapper.Map<PersonalInformationDto, PersonalInformation>(personalInformationDto);
-                updatedRecord.UserId = userId;
-                updatedRecord.Id = recordToUpdate.Id;
-                _personalInformationRepository.UpdatePersonalInformation(updatedRecord);
+                _mapper.Map(personalInformationDto, recordToUpdate);
+                _personalInformationRepository.UpdatePersonalInformation(recordToUpdate);
             }
         }
 
@@ -67,6 +65,10 @@ namespace PeopleSystem.BusinessLogic.Services
                 throw new Exception("Record not found");
             }
         }
+
+
+
+
 
         public void AddPhotoToPersonalInformationRecord(int userId, string personalIdentificationNumber, ProfilePhotoDto photo)
         {

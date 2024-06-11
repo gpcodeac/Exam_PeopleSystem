@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PeopleSystem.Database.Models
 {
@@ -14,8 +15,9 @@ namespace PeopleSystem.Database.Models
         [StringLength(255)]
         public string ThumbnailPath { get; set; }
 
+        [ForeignKey("PersonalInformation")]
         public int PersonalInformationId { get; set; }
 
-        public virtual PersonalInformation PersonalInformation { get; set; }
+        public PersonalInformation PersonalInformation { get; set; }
     }
 }

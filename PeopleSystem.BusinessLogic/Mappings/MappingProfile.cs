@@ -12,6 +12,7 @@ namespace PeopleSystem.BusinessLogic.Mappings
             CreateMap<UserSignupRequestDto, User>();
             CreateMap<User, UserDataForAdminResponseDto>();
             CreateMap<PersonalInformation, PersonalInformationDto>().ReverseMap();
+            CreateMap<PlaceOfResidence, PlaceOfResidenceDto>().ReverseMap();
             //CreateMap<PersonalInformationDto, PersonalInformation>();
         }
     }

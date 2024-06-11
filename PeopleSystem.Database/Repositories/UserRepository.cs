@@ -1,4 +1,5 @@
-﻿using PeopleSystem.Database.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PeopleSystem.Database.Models;
 using PeopleSystem.Database.Repositories.Interfaces;
 
 namespace PeopleSystem.Database.Repositories
@@ -20,18 +21,17 @@ namespace PeopleSystem.Database.Repositories
 
         public User ReadUserById(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return _context.Users.Include(u => u.PersonalInformation).FirstOrDefault(u => u.Id == id);
         }
 
         public User ReadUserByUsername(string username)
         {
-            return _context.Users.FirstOrDefault(u => u.Username == username);
+            return _context.Users.Include(u => u.PersonalInformation).FirstOrDefault(u => u.Username == username);
         }
 
         public List<User> ReadAllUsers()
         {
-            //return [.. _context.Users]; //new syntax
-            return _context.Users.ToList();
+            return [.. _context.Users.Include(u => u.PersonalInformation)]; //new syntax
         }
 
         public void UpdateUser(User user)

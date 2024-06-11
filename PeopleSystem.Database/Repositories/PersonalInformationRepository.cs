@@ -1,4 +1,5 @@
-﻿using PeopleSystem.Database.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PeopleSystem.Database.Models;
 using PeopleSystem.Database.Repositories.Interfaces;
 
 namespace PeopleSystem.Database.Repositories
@@ -18,14 +19,21 @@ namespace PeopleSystem.Database.Repositories
             _context.SaveChanges();
         }
 
-        public PersonalInformation ReadPersonalInformationById(int id)
+        public PersonalInformation? ReadPersonalInformationById(int id)
         {
-            return _context.PersonalInformations.FirstOrDefault(pi => pi.Id == id);
+            return _context.PersonalInformations
+                .Include(pi => pi.PlaceOfResidence)
+                .Include(pi => pi.ProfilePhoto)
+                .FirstOrDefault(pi => pi.Id == id);
         }
 
         public List<PersonalInformation> ReadAllPersonalInformationOnUser(int userId)
         {
-            return _context.PersonalInformations.Where(pi => pi.UserId == userId).ToList();
+            return _context.PersonalInformations
+                .Include(pi => pi.PlaceOfResidence)
+                .Include(pi => pi.ProfilePhoto)
+                .Where(pi => pi.UserId == userId)
+                .ToList();
         }
 
         public void UpdatePersonalInformation(PersonalInformation personalInformation)

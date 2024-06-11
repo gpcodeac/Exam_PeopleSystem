@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeopleSystem.Database;
 
@@ -11,9 +12,11 @@ using PeopleSystem.Database;
 namespace PeopleSystem.Database.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240611155837_SmallCorrectionOnFieldSize")]
+    partial class SmallCorrectionOnFieldSize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace PeopleSystem.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PersonalInformations", (string)null);
+                    b.ToTable("PersonalInformations");
                 });
 
             modelBuilder.Entity("PeopleSystem.Database.Models.PlaceOfResidence", b =>
@@ -108,7 +111,7 @@ namespace PeopleSystem.Database.Migrations
                     b.HasIndex("PersonalInformationId")
                         .IsUnique();
 
-                    b.ToTable("PlacesOfResidence", (string)null);
+                    b.ToTable("PlacesOfResidence");
                 });
 
             modelBuilder.Entity("PeopleSystem.Database.Models.ProfilePhoto", b =>
@@ -137,7 +140,7 @@ namespace PeopleSystem.Database.Migrations
                     b.HasIndex("PersonalInformationId")
                         .IsUnique();
 
-                    b.ToTable("ProfilePhotos", (string)null);
+                    b.ToTable("ProfilePhotos");
                 });
 
             modelBuilder.Entity("PeopleSystem.Database.Models.User", b =>
@@ -171,7 +174,7 @@ namespace PeopleSystem.Database.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PeopleSystem.Database.Models.PersonalInformation", b =>

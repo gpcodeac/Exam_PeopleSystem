@@ -1,6 +1,7 @@
 ﻿using PeopleSystem.Database.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PeopleSystem.Database.Models
 {
@@ -31,8 +32,9 @@ namespace PeopleSystem.Database.Models
 
         public PlaceOfResidence? PlaceOfResidence { get; set; }
 
+        [ForeignKey("User")]
         public int UserId { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace PeopleSystem.Database.Models
 
         public Role Role { get; set; }
 
-        public virtual List<PersonalInformation>? PersonalInformation { get; set; }
+        public List<PersonalInformation>? PersonalInformation { get; set; }
 
     }
 }

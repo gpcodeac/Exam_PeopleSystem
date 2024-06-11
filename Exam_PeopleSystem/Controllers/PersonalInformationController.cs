@@ -175,5 +175,27 @@ namespace Exam_PeopleSystem.Controllers
             }
         }
 
+
+        [HttpDelete]
+        [Route("{pesonalIdentificationNumber}/photo")]
+        [Authorize(Roles = "User")]
+        public IActionResult DeletePhotoFromPersonalInformationRecord(string pesonalIdentificationNumber)
+        {
+            try
+            {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                int userId = int.Parse(userIdClaim.Value);
+                _personalInformationService.DeletePhotoFromPersonalInformationRecord(userId, pesonalIdentificationNumber);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

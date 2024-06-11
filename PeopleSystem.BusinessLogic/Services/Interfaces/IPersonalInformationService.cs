@@ -10,5 +10,6 @@ namespace PeopleSystem.BusinessLogic.Services.Interfaces
         void DeletePersonalInformationRecord(int userId, string personalIdentificationNumber);
         void AddPhotoToPersonalInformationRecord(int userId, string personalIdentificationNumber, ProfilePhotoDto photo);
         byte[] GetPhotoFromPersonalInformationRecord(int userId, string personalIdentificationNumber);
+        void DeletePhotoFromPersonalInformationRecord(int userId, string personalIdentificationNumber);
     }
 }

@@ -143,14 +143,27 @@ namespace PeopleSystem.BusinessLogic.Services
         }
 
 
-
-        public void DeletePhotoFromPersonalInformationRecord(ProfilePhoto photo)
+        public void DeletePhotoFromPersonalInformationRecord(int userId, string personalIdentificationNumber)
         {
-            if (photo is not null)
+            var record = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
+                            .FirstOrDefault(pi => pi.PersonalIdentificationNumber == personalIdentificationNumber);
+            if (record is null)
             {
-                File.Delete(photo.PhotoPath);
-                File.Delete(photo.ThumbnailPath);
+                throw new Exception("Record not found");
             }
+            if (record.ProfilePhoto is null)
+            {
+                throw new Exception("Photo not found");
+            }
+            if (!File.Exists(record.ProfilePhoto.PhotoPath) || !File.Exists(record.ProfilePhoto.ThumbnailPath))
+            {
+                throw new Exception("Photo not found");
+            }
+
+            File.Delete(record.ProfilePhoto.PhotoPath);
+            File.Delete(record.ProfilePhoto.ThumbnailPath);
+            record.ProfilePhoto = null;
+            _personalInformationRepository.UpdatePersonalInformation(record);
         }
 
     }

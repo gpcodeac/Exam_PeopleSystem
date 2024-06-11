@@ -1,15 +1,34 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace PeopleSystem.BusinessLogic.Attributes
 {
-    internal class UNUSEDAllowedExtensionsAttribute : ValidationAttribute
+    internal class AllowedExtensionsAttribute : ValidationAttribute
     {
-        private readonly string[] _extensions;
 
-        public UNUSEDAllowedExtensionsAttribute(string[] extensions)
+        private string? _extensions;
+
+        public string Extensions
         {
-            _extensions = extensions;
+            // Default file extensions match those from jquery validate.
+            get => string.IsNullOrWhiteSpace(_extensions) ? "png,jpg,jpeg,gif" : _extensions;
+            set => _extensions = value;
+        }
+
+        private string ExtensionsFormatted => ExtensionsParsed.Aggregate((left, right) => left + ", " + right);
+
+        private string ExtensionsNormalized =>
+            Extensions.Replace(" ", string.Empty).Replace(".", string.Empty).ToLowerInvariant();
+
+        private IEnumerable<string> ExtensionsParsed
+        {
+            get { return ExtensionsNormalized.Split(',').Select(e => "." + e); }
+        }
+
+
+        public AllowedExtensionsAttribute()
+        {
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -21,23 +40,17 @@ namespace PeopleSystem.BusinessLogic.Attributes
 
             if (value is IFormFile file)
             {
-                var extension = Path.GetExtension(file.FileName);
+                var fileExtension = Path.GetExtension(file.FileName);
 
-                if (!_extensions.Contains(extension.ToLower()))
+                if (!ExtensionsParsed.Contains(fileExtension.ToLower()))
                 {
                     return new ValidationResult($"This file extension is not allowed! Allowed extensions are: {string.Join(", ", _extensions)}");
                 }
             }
 
-            //var file = value as IFormFile;
-            //var extension = Path.GetExtension(file.FileName);
-
-            //if (!_extensions.Contains(extension.ToLower()))
-            //{
-            //    return new ValidationResult($"This file extension is not allowed! Allowed extensions are: {string.Join(", ", _extensions)}");
-            //}
-
             return ValidationResult.Success;
         }
+
+
     }
 }

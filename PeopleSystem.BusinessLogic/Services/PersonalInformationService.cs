@@ -5,6 +5,7 @@ using PeopleSystem.Database.Models;
 using PeopleSystem.BusinessLogic.Services.Interfaces;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace PeopleSystem.BusinessLogic.Services
 {
@@ -66,10 +67,6 @@ namespace PeopleSystem.BusinessLogic.Services
             }
         }
 
-
-
-
-
         public void AddPhotoToPersonalInformationRecord(int userId, string personalIdentificationNumber, ProfilePhotoDto photo)
         {
             var recordToUpdate = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
@@ -79,16 +76,25 @@ namespace PeopleSystem.BusinessLogic.Services
                 throw new Exception("Record not found");
             }
 
-            //add a check for directory and create if needed
+            if (recordToUpdate.ProfilePhoto is null)
+            {
+                recordToUpdate.ProfilePhoto = new ProfilePhoto();
+            }
+            else
+            {
+                throw new Exception("Photo already exists");
+            }
+            
+            CreateFolders(out string photoFolder, out string thumbnailFolder);
 
-            string photoPath = $"Photos/{photo.Image.Name}_{DateTime.Now.ToString("yyyy_MM_dd_H_m_s")}{Path.GetExtension(photo.Image.FileName)}";
+            string photoPath = $"{photoFolder}/{photo.Image.Name}_{DateTime.Now.ToString("yyyy_MM_dd_H_m_s")}{Path.GetExtension(photo.Image.FileName)}";
             recordToUpdate.ProfilePhoto.PhotoPath = photoPath;
             using (FileStream file = new FileStream(photoPath, FileMode.Create))
             {
                 photo.Image.CopyTo(file);
             }
 
-            string thumbnailPath = $"Photos/Thumbnails/{photo.Image.Name}_{DateTime.Now.ToString("yyyy_MM_dd_H_m_s")}_th{Path.GetExtension(photo.Image.FileName)}";
+            string thumbnailPath = $"{thumbnailFolder}/{photo.Image.Name}_{DateTime.Now.ToString("yyyy_MM_dd_H_m_s")}_th{Path.GetExtension(photo.Image.FileName)}";
             recordToUpdate.ProfilePhoto.ThumbnailPath = thumbnailPath;
             Bitmap myBitMap = new Bitmap(photo.Image.OpenReadStream());
             Image thumb = myBitMap.GetThumbnailImage(200, 200, () => false, IntPtr.Zero);
@@ -100,6 +106,52 @@ namespace PeopleSystem.BusinessLogic.Services
             _personalInformationRepository.UpdatePersonalInformation(recordToUpdate); //should create photo object in the beginning? Should update foreign key?
         }
 
+        private void CreateFolders(out string photoFolder, out string thumbnailFolder)
+        {
+            string folder = "Photos";
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+            string thumbnail = "Photos/Thumbnails";
+            if (!Directory.Exists(thumbnail))
+            {
+                Directory.CreateDirectory(thumbnail);
+            }
+            photoFolder = folder;
+            thumbnailFolder = thumbnail;
+        }
+
+        public byte[] GetPhotoFromPersonalInformationRecord(int userId, string personalIdentificationNumber)
+        {
+            var record = _personalInformationRepository.ReadAllPersonalInformationOnUser(userId)
+                            .FirstOrDefault(pi => pi.PersonalIdentificationNumber == personalIdentificationNumber);
+            if (record is null)
+            {
+                throw new Exception("Record not found");
+            }
+            if (record.ProfilePhoto is null)
+            {
+                throw new Exception("Photo not found");
+            }
+            if (!File.Exists(record.ProfilePhoto.PhotoPath))
+            {
+                throw new Exception("Photo not found");
+            }
+
+            return File.ReadAllBytes(record.ProfilePhoto.PhotoPath);
+        }
+
+
+
+        public void DeletePhotoFromPersonalInformationRecord(ProfilePhoto photo)
+        {
+            if (photo is not null)
+            {
+                File.Delete(photo.PhotoPath);
+                File.Delete(photo.ThumbnailPath);
+            }
+        }
 
     }
 }

@@ -142,10 +142,7 @@ namespace Exam_PeopleSystem.Controllers
                     return Unauthorized();
                 }
                 int userId = int.Parse(userIdClaim.Value);
-                
-
-
-
+                _personalInformationService.AddPhotoToPersonalInformationRecord(userId, pesonalIdentificationNumber, photo);
                 return Ok();
             }
             catch (Exception e)
@@ -154,6 +151,29 @@ namespace Exam_PeopleSystem.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("{pesonalIdentificationNumber}/photo")]
+        [Authorize(Roles = "User")]
+        public IActionResult GetPhotoFromPersonalInformationRecord(string pesonalIdentificationNumber)
+        {
+            try
+            {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                int userId = int.Parse(userIdClaim.Value);
+                byte[] imageData = _personalInformationService.GetPhotoFromPersonalInformationRecord(userId, pesonalIdentificationNumber);
+
+                return File(imageData, "image/jpeg");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
 
     }
 }

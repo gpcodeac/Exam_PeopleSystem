@@ -14,7 +14,6 @@ namespace PeopleSystem.BusinessLogic.Mappings
             CreateMap<PersonalInformation, PersonalInformationForAdminDto>();
             CreateMap<PersonalInformation, PersonalInformationDto>().ReverseMap();
             CreateMap<PlaceOfResidence, PlaceOfResidenceDto>().ReverseMap();
-            //CreateMap<PersonalInformationDto, PersonalInformation>();
         }
     }
 }
